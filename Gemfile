@@ -4,8 +4,10 @@ source 'https://rubygems.org'
 gem 'ancestry'
 # quickly add or move records as admin
 gem 'rails_admin'
-
 gem 'foundation-rails'
+gem 'react-rails'
+gem 'flux-rails-assets'
+gem 'lodash-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
