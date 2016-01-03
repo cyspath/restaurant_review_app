@@ -5,6 +5,7 @@ gem 'ancestry'
 # quickly add or move records as admin
 gem 'rails_admin'
 
+gem 'foundation-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
