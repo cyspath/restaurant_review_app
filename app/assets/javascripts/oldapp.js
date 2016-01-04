@@ -1,4 +1,5 @@
-//
+// old es5 code, which will be transformed in app.es6
+
 var Constants = {
   CHANGE_EVENT: 'change',
   ADD_COMMENT: 'comments.add'
@@ -38,10 +39,10 @@ var AppDispather = new Flux.Dispatcher();
 
 AppDispather.register(function(payload) {
   var action = payload.actionType;
-  console.log(payload);
   switch(action) {
     case Constants.ADD_COMMENT:
       Store.addComment(payload.comment);
+      Store.emitChange();
       break;
     default:
       //  NO-OP
