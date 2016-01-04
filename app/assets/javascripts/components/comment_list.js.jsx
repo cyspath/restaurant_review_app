@@ -2,12 +2,12 @@ var CommentList = React.createClass({
 
   // run once right after a component is mounted on DOM
   componentDidMount: function() {
-    commentStore.addChangeListener(this._onChange);
+    Store.addChangeListener(this._onChange);
   },
 
   // runs once right before component is removed
   componentWillUnmount: function() {
-    commentStore.removeChangeListener(this._onChange);
+    Store.removeChangeListener(this._onChange);
   },
 
   render: function() {
@@ -17,7 +17,7 @@ var CommentList = React.createClass({
           // JSON.parse(this.props.comments).map(function(comment) {
           //   return <Comment key={comment.id} {... comment} />;
           // })
-          commentStore.comments().map(function(comment) {
+          Store.comments().map(function(comment) {
             return <Comment key={comment.id} {... comment} />;
           })
         }
