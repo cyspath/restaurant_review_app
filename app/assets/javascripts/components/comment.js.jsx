@@ -1,4 +1,5 @@
 var Comment = React.createClass({
+
   propTypes: {
     author: React.PropTypes.string,
     body: React.PropTypes.string,

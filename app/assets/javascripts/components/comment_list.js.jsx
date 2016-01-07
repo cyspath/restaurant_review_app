@@ -1,5 +1,9 @@
 var CommentList = React.createClass({
 
+  // contextTypes: {
+  //   store: React.PropTypes.object.isRequired
+  // },
+
   // run once right after a component is mounted on DOM
   componentDidMount: function() {
     Store.addChangeListener(this._onChange);
@@ -13,11 +17,7 @@ var CommentList = React.createClass({
   render: function() {
     return (
       <div>
-        {
-          // JSON.parse(this.props.comments).map(function(comment) {
-          //   return <Comment key={comment.id} {... comment} />;
-          // })
-          Store.comments().map(function(comment) {
+        {Store.comments().map(function(comment) {
             return <Comment key={comment.id} {... comment} />;
           })
         }

@@ -1,6 +1,8 @@
 import AppDispatcher from '/app_dispatcher';
 import Constants from '/constants';
 
+// store
+
 class CommentStore extends EventEmitter {
 
   constructor() {
@@ -9,6 +11,10 @@ class CommentStore extends EventEmitter {
 
     AppDispatcher.register((payload) => {
       switch(payload.actionType) {
+        case Constants.SET_COMMENTS:
+          this.setComments(payload.comments)
+          this.emitChange()
+          break;
         case Constants.ADD_COMMENT:
           this.addComment(payload.comment)
           this.emitChange()
@@ -21,7 +27,13 @@ class CommentStore extends EventEmitter {
   }
 
   addComment (comment) {
-    this._comments[comment.id] = comment;
+    this._comments[comment.id || this._comments.length] = comment;
+  }
+
+  setComments (comments) {
+    comments.forEach(comment => {
+      this.addComment(comment)
+    })
   }
 
   comments () {

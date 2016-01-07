@@ -3,15 +3,20 @@ var Store = new _.extend({}, EventEmitter.prototype, {
   _comments: [],
 
   addComment: function(comment) {
-    this._comments[comment.id] = comment
+    this._comments[comment.id || this._comments.length] = comment
+  },
+
+  setComments: function(comments) {
+    comments.forEach(function(comment) {
+      this.addComment(comment)
+    }.bind(this))
   },
 
   comments: function() {
     return this._comments
   },
 
-  // boilerplate
-  // '.on' is from EventEmitter prototype, when this change happens, make sure let the callback know about it
+  // boilerplate, '.on' is from EventEmitter prototype, when this change happens, make sure let the callback know about it
   addChangeListener: function(callback) {
     this.on(Constants.CHANGE_EVENT, callback)
   },
@@ -27,16 +32,21 @@ var Store = new _.extend({}, EventEmitter.prototype, {
 });
 
 
-// There should be only one dispatcher in app
 var AppDispather = new Flux.Dispatcher();
 
 AppDispather.register(function(payload) {
-  var action = payload.actionType;
-  switch(action) {
+
+  switch(payload.actionType) {
+
     case Constants.ADD_COMMENT:
       Store.addComment(payload.comment);
       Store.emitChange();
       break;
+
+    case Constants.SET_COMMENTS:
+      Store.setComments(payload.comments);
+      Store.emitChange();
+
     default:
       //  NO-OP
   }
