@@ -1,10 +1,3 @@
-// old es5 code, which will be transformed in app.es6
-
-var Constants = {
-  CHANGE_EVENT: 'change',
-  ADD_COMMENT: 'comments.add'
-}
-
 var Store = new _.extend({}, EventEmitter.prototype, {
 
   _comments: [],

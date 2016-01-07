@@ -1,5 +1,3 @@
-
-// Actions
 var Actions = new _.extend({}, {
   addComment: function(params) {
     AppDispather.dispatch({
