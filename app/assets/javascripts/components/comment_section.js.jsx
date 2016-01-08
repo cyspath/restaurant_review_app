@@ -1,14 +1,13 @@
 var CommentSection = React.createClass({
 
-  getInitialState: function() {
-    // debugger
-    return { comments: JSON.parse(this.props.comments) };
-  },
-
-  // componentDidMount: function() {
-  //   debugger
-  //   Actions.setComments(JSON.parse(props.comments))
+  // getInitialState: function() {
+  //   // debugger
+  //   return { comments: JSON.parse(this.props.comments) };
   // },
+
+  componentDidMount: function() {
+    Actions.setComments(JSON.parse(this.props.comments))
+  },
 
   // contextTypes: {
   //   Actions: React.PropTypes.func.isRequired
@@ -27,8 +26,9 @@ var CommentSection = React.createClass({
   // },
 
   render: function() {
-    Actions.setComments(this.state.comments)
+    // Actions.setComments(this.state.comments)
     return <div>
+      <CommentForm />
       <CommentList />
     </div>
   }

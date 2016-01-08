@@ -1,32 +1,32 @@
-// var CommentForm = React.createClass({
-//
-//   contextTypes: {
-//     actions: React.PropTypes.func.isRequired
-//   },
-//
-//   // run once right after a component is mounted on DOM
-//   componentDidMount: function() {
-//     this.context.addChangeListener(this._onChange);
-//   },
-//
-//   // runs once right before component is removed
-//   componentWillUnmount: function() {
-//     this.context.removeChangeListener(this._onChange);
-//   },
-//
-//   render: function() {
-//     return (
-//       <div>
-//         {this.context.comments().map(function(comment) {
-//             return <Comment key={comment.id} {... comment} />;
-//           })
-//         }
-//       </div>
-//     );
-//   },
-//
-//   _onChange: function() {
-//     this.forceUpdate();
-//   }
-//
-// })
+var CommentForm = React.createClass({
+
+  getInitialState: function() {
+    this.defaultState = { body: "", author: "" };
+    return this.defaultState;
+  },
+
+  submitComment: function(event) {
+    event.preventDefault();
+    Actions.addComment(this.state);
+    this.setState(this.defaultState);
+  },
+
+  onFieldChange: function(event) {
+    var prop = {};
+    prop[event.target.name] = event.target.value;
+    this.setState(prop)
+  },
+
+  render: function() {
+    return (
+       <form>
+        <label>Author</label>
+        <input type='text' name='author' onChange={this.onFieldChange} value={this.state.author} />
+        <label>Comment</label>
+        <textarea name='body' value={this.state.body} onChange={this.onFieldChange} />
+        <button onClick={this.submitComment} type="submit" >Submit</button>
+      </form>
+    );
+  },
+
+})
