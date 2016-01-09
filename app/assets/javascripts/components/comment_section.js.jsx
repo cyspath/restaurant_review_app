@@ -1,36 +1,61 @@
 var CommentSection = React.createClass({
 
-  // getInitialState: function() {
-  //   // debugger
-  //   return { comments: JSON.parse(this.props.comments) };
-  // },
+  childContextTypes: {
+    store: React.PropTypes.object.isRequired,
+    actions: React.PropTypes.object.isRequired
+  },
+
+  getChildContext: function() {
+    return {
+      store: Store,
+      actions: Actions
+    }
+  },
 
   componentDidMount: function() {
     Actions.setComments(JSON.parse(this.props.comments))
   },
 
-  // contextTypes: {
-  //   Actions: React.PropTypes.func.isRequired
-  // },
-  //
-  // childContextTypes: {
-  //   Store: React.PropTypes.object.isRequired,
-  //   Actions: React.PropTypes.func.isRequired
-  // },
-
-  // getChildContext: function() {
-  //   return {
-  //     store: Store,
-  //     actions: Actions
-  //   }
-  // },
-
   render: function() {
     // Actions.setComments(this.state.comments)
     return <div>
-      <CommentForm />
-      <CommentList />
+      <CommentForm isReplying={true} />
+      <CommentList parent_id={null} />
     </div>
   }
 
 })
+
+
+
+//
+// class CommentSection extends React.Component {
+//
+//   constructor(props) {
+//     super()
+//     this.store = new CommentStore()
+//     this.actions = Actions
+//     this.actions.setComments(JSON.parse(props.comments));
+//   }
+//
+//   static get childContextTypes() {
+//     return {
+//       store: React.PropTypes.object.isRequired,
+//       actions: React.PropTypes.func.isRequired
+//     }
+//   }
+//
+//   getChildContext() {
+//     return {
+//       store: this.store,
+//       actions: this.actions
+//     }
+//   }
+//
+//   render() {
+//     return <div>
+//       <CommentForm isReplying={true} />
+//       <CommentList parent_id={null} />
+//     </div>
+//   }
+// }

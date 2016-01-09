@@ -12,8 +12,8 @@ var Store = new _.extend({}, EventEmitter.prototype, {
     }.bind(this))
   },
 
-  comments: function() {
-    return this._comments
+  comments: function(parentId) {
+    return this._comments.filter(function(c) { return c && c.parent_id === parentId })
   },
 
   // boilerplate, '.on' is from EventEmitter prototype, when this change happens, make sure let the callback know about it
@@ -32,9 +32,9 @@ var Store = new _.extend({}, EventEmitter.prototype, {
 });
 
 
-var AppDispather = new Flux.Dispatcher();
+var AppDispatcher = new Flux.Dispatcher();
 
-AppDispather.register(function(payload) {
+AppDispatcher.register(function(payload) {
 
   switch(payload.actionType) {
 
@@ -46,6 +46,7 @@ AppDispather.register(function(payload) {
     case Constants.SET_COMMENTS:
       Store.setComments(payload.comments);
       Store.emitChange();
+      break;
 
     default:
       //  NO-OP

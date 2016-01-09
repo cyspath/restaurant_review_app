@@ -14,12 +14,26 @@ var Api = new _.extend({}, {
     }
   },
 
+  get: function(route, params) {
+    return this.xhr(route, params, 'get');
+  },
+
+  put: function(route, params) {
+    return this.xhr(route, params, 'put');
+  },
+
   post: function(route, params) {
-    return fetch(`${route}.json`, _.merge({
-      method: 'post',
-      credentials: 'include',
-      headers: this.headers()
-    }, { body: JSON.stringify(params) }))
+    return this.xhr(route, params, 'post');
+  },
+
+  xhr: function(route, params, verb) {
+    return fetch(
+      route + '.json',
+      _.merge(
+        { method: verb, credentials: 'include', headers: this.headers() },
+        { body: JSON.stringify(params) }
+      )
+    ).then(function(resp) { return resp.json(); })
   }
 
 });

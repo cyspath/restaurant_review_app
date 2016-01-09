@@ -7,7 +7,9 @@ var CommentForm = React.createClass({
 
   submitComment: function(event) {
     event.preventDefault();
-    Actions.addComment(this.state);
+
+    Actions.addComment(_.merge(this.state, { parent_id: this.props.parent_id }));
+
     this.setState(this.defaultState);
   },
 
@@ -19,13 +21,17 @@ var CommentForm = React.createClass({
 
   render: function() {
     return (
-       <form>
-        <label>Author</label>
-        <input type='text' name='author' onChange={this.onFieldChange} value={this.state.author} />
-        <label>Comment</label>
-        <textarea name='body' value={this.state.body} onChange={this.onFieldChange} />
-        <button onClick={this.submitComment} type="submit" >Submit</button>
-      </form>
+      <div>
+
+        <form className={ this.props.isReplying ? "" : "hide"}>
+          <label>Author</label>
+          <input type='text' name='author' onChange={this.onFieldChange} value={this.state.author} />
+          <label>Comment</label>
+          <textarea name='body' value={this.state.body} onChange={this.onFieldChange} />
+          <button onClick={this.submitComment} type="submit" >Submit</button>
+        </form>
+
+      </div>
     );
   },
 
