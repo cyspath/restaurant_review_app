@@ -5,12 +5,28 @@ var CommentForm = React.createClass({
     return this.defaultState;
   },
 
+  contextTypes: function() {
+    return {
+      actions: React.PropTypes.object.isRequired
+    }
+  },
+
+  propTypes: function() {
+    return {
+      isReplying: React.PropTypes.bool,
+      onCommentSubmitted: React.PropTypes.func,
+      parent_id: React.PropTypes.number
+    }
+  },
+
   submitComment: function(event) {
     event.preventDefault();
-
     Actions.addComment(_.merge(this.state, { parent_id: this.props.parent_id }));
-
     this.setState(this.defaultState);
+    if (this.props.onCommentSubmitted) {
+      // root form will not have this props and thus will not hide
+      this.props.onCommentSubmitted();
+    }
   },
 
   onFieldChange: function(event) {

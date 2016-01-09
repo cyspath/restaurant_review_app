@@ -12,6 +12,10 @@ var Store = new _.extend({}, EventEmitter.prototype, {
     }.bind(this))
   },
 
+  upvoteComment: function(comment) {
+    this._comments[comment.id].rank++;
+  },
+
   comments: function(parentId) {
     return this._comments.filter(function(c) { return c && c.parent_id === parentId })
   },
@@ -45,6 +49,11 @@ AppDispatcher.register(function(payload) {
 
     case Constants.SET_COMMENTS:
       Store.setComments(payload.comments);
+      Store.emitChange();
+      break;
+
+    case Constants.UPVOTE_COMMENT:
+      Store.upvoteComment(payload.comment)
       Store.emitChange();
       break;
 

@@ -8,17 +8,30 @@ var Actions = new _.extend({}, {
   },
 
   addComment: function(params) {
-
-    Api.post('/restaurants/1/comments', { comment: params})
+    Api
+      .post(
+        '/restaurants/1/comments',
+        { comment: params}
+      )
       .then(function(comment) {
-
         window.AppDispatcher.dispatch({
           actionType: Constants.ADD_COMMENT,
-          comment: params
+          comment: comment
         });
-
       })
-  }
+  },
+
+  upvoteComment: function(comment) {
+    Api
+      .put(
+        '/restaurants/1/comments/' + comment.id + '/upvote')
+      .then(function(comment) {
+        window.AppDispatcher.dispatch({
+          actionType: Constants.UPVOTE_COMMENT,
+          comment: comment
+        });
+      })
+  },
 
 });
 
