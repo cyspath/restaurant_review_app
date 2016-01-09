@@ -2,7 +2,15 @@ class CommentForm extends React.Component {
 
   static get contextTypes() {
     return {
-      actions: React.PropTypes.func.isRequired
+      actions: React.PropTypes.object.isRequired
+    }
+  }
+
+  static get propTypes() {
+    return {
+      isReplying: React.PropTypes.bool,
+      onCommentSubmitted: React.PropTypes.func,
+      parent_id: React.PropTypes.number
     }
   }
 
@@ -10,12 +18,11 @@ class CommentForm extends React.Component {
     super()
     this.defaultState = { body: '', author: ''};
     this.state = this.defaultState;
-    this.state.isReplying = props.isReplying || false
+    // this.state.isReplying = props.isReplying || false
   }
 
   submitComment(event) {
     event.preventDefault();
-    console.log(this.props);
     this.context.actions.addComment(_.merge(this.state, { parent_id: this.props.parent_id }));
     this.setState(this.defaultState);
   }

@@ -4,23 +4,21 @@ import Api from '/api';
 
 class Actions {
 
-  static addComment(params) {
+  addComment(params) {
     Api.post('/restaurants/1/comments', {
       comment: params
-    }).then( resp => {
-      return resp.json();
     }).then( comment => {
 
       AppDispatcher.dispatch({
         actionType: Constants.ADD_COMMENT,
-        comment: params
+        comment: comment
       });
 
     })
 
   }
 
-  static setComments(params) {
+  setComments(params) {
     AppDispatcher.dispatch({
       actionType: Constants.SET_COMMENTS,
       comments: params

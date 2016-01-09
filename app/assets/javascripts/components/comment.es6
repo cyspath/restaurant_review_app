@@ -2,6 +2,13 @@ import CommentForm from './comment_form';
 import CommentList from './comment_list';
 
 class Comment extends React.Component {
+
+  static get contextTypes() {
+    return {
+      actions: React.PropTypes.object.isRequired
+    }
+  }
+
   static get propTypes() {
     return {
       id: React.PropTypes.number,
