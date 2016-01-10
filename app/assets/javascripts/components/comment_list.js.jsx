@@ -1,27 +1,27 @@
 var CommentList = React.createClass({
 
+  contextTypes: {
+      store: React.PropTypes.object.isRequired,
+      actions: React.PropTypes.object.isRequired
+  },
+
   // run once right after a component is mounted on DOM
   componentDidMount: function() {
-    commentStore.addChangeListener(this._onChange);
+    this.context.store.addChangeListener(this._onChange);
   },
 
   // runs once right before component is removed
   componentWillUnmount: function() {
-    commentStore.removeChangeListener(this._onChange);
+    this.context.store.removeChangeListener(this._onChange);
   },
 
   render: function() {
     return (
-      <div>
-        {
-          // JSON.parse(this.props.comments).map(function(comment) {
-          //   return <Comment key={comment.id} {... comment} />;
-          // })
-          commentStore.comments().map(function(comment) {
-            return <Comment key={comment.id} {... comment} />;
-          })
-        }
-      </div>
+      <ul>
+        {this.context.store.comments(this.props.parent_id).map(function(comment, i) {
+          return <Comment key={i} {... comment} />;
+        })}
+      </ul>
     );
   },
 
@@ -30,7 +30,6 @@ var CommentList = React.createClass({
   }
 
 })
-
 
 // destructor refactor - 'splat'
 // rank={comment.rank} body={comment.body} author={comment.author}
