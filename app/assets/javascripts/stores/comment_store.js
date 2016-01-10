@@ -34,7 +34,6 @@ var Store = new _.extend({}, EventEmitter.prototype, {
   },
 
   emitChange: function() {
-    debugger
     this.emit(Constants.CHANGE_EVENT);
   }
 
@@ -47,13 +46,13 @@ AppDispatcher.register(function(payload) {
 
   switch(payload.actionType) {
 
-    case Constants.ADD_COMMENT:
-      Store.addComment(payload.comment);
+    case Constants.SET_COMMENTS:
+      Store.setComments(payload.comments);
       Store.emitChange();
       break;
 
-    case Constants.SET_COMMENTS:
-      Store.setComments(payload.comments);
+    case Constants.ADD_COMMENT:
+      Store.addComment(payload.comment);
       Store.emitChange();
       break;
 

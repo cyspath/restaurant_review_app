@@ -13,7 +13,6 @@ var CommentSection = React.createClass({
   },
 
   componentDidMount: function() {
-    debugger
     Actions.setComments(JSON.parse(this.props.comments))
   },
 
