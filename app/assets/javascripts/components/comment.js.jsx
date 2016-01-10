@@ -1,7 +1,8 @@
 var Comment = React.createClass({
 
   contextTypes: {
-    actions: React.PropTypes.object.isRequired
+    actions: React.PropTypes.object.isRequired,
+    store: React.PropTypes.object.isRequired,
   },
 
   propTypes: {
@@ -12,7 +13,9 @@ var Comment = React.createClass({
   },
 
   getInitialState: function() {
-    return { isReplying: false }
+    return {
+      isReplying: false
+    }
   },
 
   onToggleReply: function() {
@@ -25,6 +28,10 @@ var Comment = React.createClass({
 
   onUpvote: function(event) {
     this.context.actions.upvoteComment(this.props);
+  },
+
+  onDelete: function(event) {
+    this.context.actions.deleteComment(this.props)
   },
 
   render: function() {
@@ -41,7 +48,8 @@ var Comment = React.createClass({
           </cite>
         </blockquote>
 
-        <button className='button tiny secondary' onClick={this.onToggleReply}>{replyText}</button>
+        <button className='button tiny success' onClick={this.onToggleReply}>{replyText}</button>
+        <button className='button tiny secondary' onClick={this.onDelete} >x</button>
         <button className='button tiny' onClick={this.onUpvote} >+1</button>
 
         <CommentForm

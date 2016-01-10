@@ -26,6 +26,11 @@ var Api = new _.extend({}, {
     return this.xhr(route, params, 'post');
   },
 
+  delete: function(route, params) {
+    return this.xhr(route, params, 'delete');
+  },
+
+
   xhr: function(route, params, verb) {
     return fetch(
       route + '.json',

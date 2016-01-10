@@ -30,7 +30,3 @@ var CommentList = React.createClass({
   }
 
 })
-
-// destructor refactor - 'splat'
-// rank={comment.rank} body={comment.body} author={comment.author}
-// {... comment}

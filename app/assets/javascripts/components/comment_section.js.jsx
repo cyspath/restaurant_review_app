@@ -13,11 +13,11 @@ var CommentSection = React.createClass({
   },
 
   componentDidMount: function() {
+    debugger
     Actions.setComments(JSON.parse(this.props.comments))
   },
 
   render: function() {
-    // Actions.setComments(this.state.comments)
     return <div>
       <CommentForm isReplying={true} />
       <CommentList parent_id={null} />

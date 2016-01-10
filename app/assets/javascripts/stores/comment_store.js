@@ -2,18 +2,22 @@ var Store = new _.extend({}, EventEmitter.prototype, {
 
   _comments: [],
 
-  addComment: function(comment) {
-    this._comments[comment.id || this._comments.length] = comment
-  },
-
   setComments: function(comments) {
     comments.forEach(function(comment) {
       this.addComment(comment)
     }.bind(this))
   },
 
+  addComment: function(comment) {
+    this._comments[comment.id || this._comments.length] = comment
+  },
+
   upvoteComment: function(comment) {
     this._comments[comment.id].rank++;
+  },
+
+  deleteComment: function(comment) {
+    delete(this._comments[comment.id])
   },
 
   comments: function(parentId) {
@@ -30,6 +34,7 @@ var Store = new _.extend({}, EventEmitter.prototype, {
   },
 
   emitChange: function() {
+    debugger
     this.emit(Constants.CHANGE_EVENT);
   }
 
@@ -57,7 +62,13 @@ AppDispatcher.register(function(payload) {
       Store.emitChange();
       break;
 
+    case Constants.DELETE_COMMENT:
+      Store.deleteComment(payload.comment)
+      Store.emitChange();
+      break;
+
     default:
       //  NO-OP
   }
+  return true;
 });

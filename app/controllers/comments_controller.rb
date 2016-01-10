@@ -11,6 +11,12 @@ class CommentsController < ApplicationController
     render :create
   end
 
+  def destroy
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+    render :create
+  end
+
   def comment_params
     params.required(:comment).permit(:body, :author, :parent_id)
   end
