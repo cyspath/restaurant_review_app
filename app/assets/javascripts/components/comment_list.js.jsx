@@ -5,16 +5,6 @@ var CommentList = React.createClass({
       actions: React.PropTypes.object.isRequired
   },
 
-  // run once right after a component is mounted on DOM
-  componentDidMount: function() {
-    this.context.store.addChangeListener(this._onChange);
-  },
-
-  // runs once right before component is removed
-  componentWillUnmount: function() {
-    this.context.store.removeChangeListener(this._onChange);
-  },
-
   render: function() {
     return (
       <ul>
@@ -25,12 +15,18 @@ var CommentList = React.createClass({
     );
   },
 
+  // run once right after a component is mounted on DOM
+  componentDidMount: function() {
+    this.context.store.addChangeListener(this._onChange);
+  },
+
+  // runs once right before component is removed
+  componentWillUnmount: function() {
+    this.context.store.removeChangeListener(this._onChange);
+  },
+
   _onChange: function() {
     this.forceUpdate();
   }
 
 })
-
-// destructor refactor - 'splat'
-// rank={comment.rank} body={comment.body} author={comment.author}
-// {... comment}

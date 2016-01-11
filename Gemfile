@@ -9,6 +9,7 @@ gem 'react-rails'
 gem 'flux-rails-assets'
 gem 'lodash-rails'
 gem 'sprockets-es6', '0.6.1'
+gem 'faker'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'

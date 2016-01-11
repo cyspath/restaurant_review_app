@@ -2,22 +2,28 @@ var Store = new _.extend({}, EventEmitter.prototype, {
 
   _comments: [],
 
-  addComment: function(comment) {
-    this._comments[comment.id || this._comments.length] = comment
-  },
-
   setComments: function(comments) {
     comments.forEach(function(comment) {
       this.addComment(comment)
     }.bind(this))
   },
 
+  addComment: function(comment) {
+    this._comments[comment.id || this._comments.length] = comment
+  },
+
   upvoteComment: function(comment) {
     this._comments[comment.id].rank++;
   },
 
+  deleteComment: function(comment) {
+    delete(this._comments[comment.id])
+  },
+
   comments: function(parentId) {
-    return this._comments.filter(function(c) { return c && c.parent_id === parentId })
+    return _.chain(
+      this._comments.filter(function(c) { return c && c.parent_id === parentId })
+    ).sortBy('rank').reverse().value()
   },
 
   // boilerplate, '.on' is from EventEmitter prototype, when this change happens, make sure let the callback know about it
@@ -42,13 +48,13 @@ AppDispatcher.register(function(payload) {
 
   switch(payload.actionType) {
 
-    case Constants.ADD_COMMENT:
-      Store.addComment(payload.comment);
+    case Constants.SET_COMMENTS:
+      Store.setComments(payload.comments);
       Store.emitChange();
       break;
 
-    case Constants.SET_COMMENTS:
-      Store.setComments(payload.comments);
+    case Constants.ADD_COMMENT:
+      Store.addComment(payload.comment);
       Store.emitChange();
       break;
 
@@ -57,7 +63,13 @@ AppDispatcher.register(function(payload) {
       Store.emitChange();
       break;
 
+    case Constants.DELETE_COMMENT:
+      Store.deleteComment(payload.comment)
+      Store.emitChange();
+      break;
+
     default:
       //  NO-OP
   }
+  return true;
 });

@@ -1,16 +1,17 @@
 var Actions = new _.extend({}, {
 
-  setComments: function(params) {
+  setComments: function(params, restaurant_id) {
     AppDispatcher.dispatch({
       actionType: Constants.SET_COMMENTS,
       comments: params
     })
+    this.restaurant_id = restaurant_id
   },
 
   addComment: function(params) {
     Api
       .post(
-        '/restaurants/1/comments',
+        '/restaurants/' + this.restaurant_id + '/comments',
         { comment: params}
       )
       .then(function(comment) {
@@ -24,7 +25,7 @@ var Actions = new _.extend({}, {
   upvoteComment: function(comment) {
     Api
       .put(
-        '/restaurants/1/comments/' + comment.id + '/upvote')
+        '/restaurants/' + this.restaurant_id + '/comments/' + comment.id + '/upvote')
       .then(function(comment) {
         window.AppDispatcher.dispatch({
           actionType: Constants.UPVOTE_COMMENT,
@@ -33,53 +34,16 @@ var Actions = new _.extend({}, {
       })
   },
 
+
+  deleteComment: function(comment) {
+    Api
+      .delete('/restaurants/' + this.restaurant_id + '/comments/' + comment.id)
+      .then(function(deletedComment) {
+        window.AppDispatcher.dispatch({
+          actionType: Constants.DELETE_COMMENT,
+          comment: deletedComment
+        });
+      })
+  }
+
 });
-
-// class Actions {
-//
-//   constructor(restaurantId) {
-//     this.restaurantId = restaurantId;
-//     this.watchInterval = setInterval(this.watch.bind(this), 1000);
-//   }
-//
-//   setComments(params) {
-//     AppDispatcher.dispatch({
-//       actionType: Constants.SET_COMMENTS,
-//       comments: params
-//     });
-//   }
-//
-//   upvoteComment(comment) {
-//     Api.put(`/restaurants/${this.restaurantId}/comments/${comment.id}/upvote`).then( comment => {
-//       AppDispatcher.dispatch({
-//         actionType: Constants.UPVOTE_COMMENT,
-//         comment: comment
-//       });
-//     });
-//   }
-//
-//   addComment(params) {
-//     Api.post(`/restaurants/${this.restaurantId}/comments`, {
-//       comment: params
-//     }).then( comment => {
-//       AppDispatcher.dispatch({
-//         actionType: Constants.ADD_COMMENT,
-//         comment: comment
-//       });
-//     })
-//   }
-//
-//   watch() {
-//     Api.get(`/restaurants/${this.restaurantId}/comments`).then( comments => {
-//       this.setComments(comments)
-//     });
-//   }
-// }
-
-// $.ajax({
-//   type: "POST",
-//   url: url,
-//   data: data,
-//   success: success,
-//   dataType: dataType
-// });
