@@ -13,7 +13,9 @@ var CommentSection = React.createClass({
   },
 
   componentDidMount: function() {
-    Actions.setComments(JSON.parse(this.props.comments), this.props.restaurant_id)
+    Actions.setComments(JSON.parse(this.props.comments))
+    Actions.restaurantId = this.props.restaurant_id
+    Actions.startRealtimeInterval()
   },
 
   render: function() {
