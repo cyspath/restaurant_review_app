@@ -13,7 +13,7 @@ var CommentSection = React.createClass({
   },
 
   componentDidMount: function() {
-    Actions.setComments(JSON.parse(this.props.comments))
+    Actions.setComments(JSON.parse(this.props.comments), this.props.restaurant_id)
   },
 
   render: function() {

@@ -21,7 +21,9 @@ var Store = new _.extend({}, EventEmitter.prototype, {
   },
 
   comments: function(parentId) {
-    return this._comments.filter(function(c) { return c && c.parent_id === parentId })
+    return _.chain(
+      this._comments.filter(function(c) { return c && c.parent_id === parentId })
+    ).sortBy('rank').reverse().value()
   },
 
   // boilerplate, '.on' is from EventEmitter prototype, when this change happens, make sure let the callback know about it

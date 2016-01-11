@@ -1,7 +1,13 @@
 class CommentsController < ApplicationController
 
+  def index
+    @comments = Comment.where(restaurant_id: params[:restaurant_id])
+  end
+
   def create
-    @comment = Comment.create(comment_params.merge(restaurant_id: params[:restaurant_id]))
+    @comment = Comment.create(
+      comment_params.merge(restaurant_id: params[:restaurant_id]).merge(rank: 0)
+    )
   end
 
   def upvote
