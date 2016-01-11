@@ -26,3 +26,11 @@ Rails.application.config.assets.configure do |env|
   env.register_transformer 'text/ecmascript-6', 'application/javasript',
     Sprockets::ES6.new('modules' => 'system', 'moduleIds' => true)
 end
+
+
+
+### webpack
+mkdir client
+cd client
+brew install node
+npm install webpack
